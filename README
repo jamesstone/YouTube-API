@@ -1,1 +1,15 @@
-YouTube API
+YouTube API.
+
+This API allows you to pull all of today's top YouTube videos and display them in a webpage.
+
+The API runs on JavaScript which can be inserted into the page and then the results will be displayed in a <div> which in this case is called #mybox.
+
+You can call the div anything you like (just remember to change the API code to point to your div.
+
+Index.html file has also been uploaded so that you can see the whole script implemented in a page.
+
+
+The API can be modified so that you can pull videos from different parts of YouTube and from different locations. Go to the YouTube API site to learn how.
+
+
+Happy watching.
