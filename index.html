@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>You Tube Videos with jQuery , json</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+<SCRIPT LANGUAGE="JavaScript">
+// Get today's current date.
+var now = new Date();
+// Array list of days.
+var days = new Array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
+// Array list of months.
+var months = new Array('January','February','March','April','May','June','July','August','September','October','November','December');
+// Calculate the number of the current day in the week.
+var date = ((now.getDate()<10) ? "0" : "")+ now.getDate();
+// Calculate four digit year.
+function fourdigits(number)	{
+	return (number < 1000) ? number + 1900 : number;
+								}
+// Join it all together
+today =  days[now.getDay()] + ", " +
+         months[now.getMonth()] + " " +
+         date + ", " +
+         (fourdigits(now.getYear())) ;
+
+var playListURL = 'http://gdata.youtube.com/feeds/api/standardfeeds/GB/most_viewed?time=today&v=2&alt=json'; 
+var videoURL= 'http://www.youtube.com/watch?v='; 
+$.getJSON(playListURL, function(data) { 
+    var list_data=""; 
+    $.each(data.feed.entry, function(i, item) { 
+        var feedTitle = item.title.$t; 
+        var feedURL = item.link[1].href; 
+        var fragments = feedURL.split("/"); 
+        var videoID = fragments[fragments.length - 2]; 
+        var url = videoURL + videoID; 
+        var thumb = "http://img.youtube.com/vi/"+ videoID +"/default.jpg"; 
+        list_data += '<div style="border: 2px solid #000; width: 600px; text-align: center; background: #CCC; padding: 10px; margin: 10px auto; font-family: Arial;"><b><a href="'+ url +'" title="'+ feedTitle +'" style="color: #000; line-height: 40px; font-size: 18px;">'+ feedTitle +'</a></b><br/ ><a href="'+ url +'" title="'+ feedTitle +'"><img alt="'+ feedTitle+'" src="'+ thumb +'" style="border: 4px solid #FF0;" /></a></div>'; 
+    }); 
+    $(list_data).appendTo("#mybox"); 
+}); 
+
+
+</script>
+</head>
+
+<body>
+<h1 align="center">YouTube Top Videos For <script type="text/javascript">document.write(today);</script></h1>
+<div id="mybox"></div>
+</body>
+</html>
